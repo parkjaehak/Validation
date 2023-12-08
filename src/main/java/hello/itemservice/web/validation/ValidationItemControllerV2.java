@@ -54,7 +54,7 @@ public class ValidationItemControllerV2 {
     }
 
     //@PostMapping("/add")
-    public String addItemV1(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String addItemV1(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         // 검증 로직
         if (!StringUtils.hasText(item.getItemName())) {
@@ -88,8 +88,8 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-    //@PostMapping("/add")
-    public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         // 검증 로직
         if (!StringUtils.hasText(item.getItemName())) {
@@ -124,7 +124,7 @@ public class ValidationItemControllerV2 {
     }
 
     //@PostMapping("/add")
-    public String addItemV3(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String addItemV3(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         log.info("objectName={}", bindingResult.getObjectName());
         log.info("target={}", bindingResult.getTarget());
@@ -162,16 +162,10 @@ public class ValidationItemControllerV2 {
     }
 
     //@PostMapping("/add")
-    public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         log.info("objectName={}", bindingResult.getObjectName());
         log.info("target={}", bindingResult.getTarget());
-
-        // 바인딩 로직
-        if (bindingResult.hasErrors()) {
-            log.info("errors ={}", bindingResult);
-            return "validation/v2/addForm";
-        }
 
         // 검증 로직
         //ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, "itemName", "required"); // 간단한 공백이나 값이 안들어왔을때
@@ -208,7 +202,7 @@ public class ValidationItemControllerV2 {
     }
 
     //@PostMapping("/add")
-    public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         itemValidator.validate(item, bindingResult);
 
@@ -225,8 +219,8 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-    @PostMapping("/add")
-    public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    //@PostMapping("/add")
+    public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         // 검증에 실패하면 다시 입력 폼으로 (error에 메세지가 하나라도 있으면)
         if (bindingResult.hasErrors()) {
